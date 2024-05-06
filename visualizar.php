@@ -6,7 +6,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 require_once 'classes.php';
-$cadastro = new Cadastro('localhost', 'vestibular.php', 'vestibular', 'fatec');
+$cadastro = new Cadastro();
 $candidatos = $cadastro->lerTodosCandidatos();
 ?>
 

@@ -2,12 +2,17 @@
 
 class Cadastro {
     private $conn;
+    private $host = "localhost";
+    private $dbname = "vestibular";
+    private $username = "root";
+    private $password = "";
 
-    public function __construct($host, $dbname, $username, $password) {
+    public function __construct() {
         try {
-            $this->conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            // Set the PDO error mode to exception
+            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->username, $this->password);
+           
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
@@ -32,10 +37,9 @@ class Cadastro {
 
     public function lerTodosCandidatos() {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM candidatos");
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+            $stmt = $this->conn->query("SELECT * FROM candidatos");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
         } catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
             return [];
